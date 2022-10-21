@@ -28,7 +28,7 @@ body{
                 margin: 0;
                 overflow:auto;
                 height: calc(100vh - $menu_height - 2px);
-                width: fit-content;
+                width: 200px;
                 li{
                     padding: 0.5rem 1rem;
                     border-bottom: 1px solid #fff;
@@ -55,6 +55,29 @@ body{
             padding: 0 1rem;
             #match_card{
                 display: flex;
+                ul{
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                    #participant_card{
+                        padding: 0.5rem 1rem;
+                        font-weight: bold;
+                        background-color: #000;
+                        margin: 1rem;
+                        width: 400px;
+                        div{
+                            #stats{
+                                display: flex;
+                                justify-content: space-evenly;
+                                padding: 0.5rem 1rem;
+                                li{
+                                    padding: 0.5rem 1rem;
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

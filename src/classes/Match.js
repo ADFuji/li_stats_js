@@ -25,12 +25,37 @@ export class Match {
         let red = document.createElement('ul');
         red.id = "red_team";
         this.info.participants.forEach(async (participant) => {
+            console.log(participant);
             let li = document.createElement('li');
-            li.innerHTML = (participant.puuid !== "BOT") ? await Fetch.Username(participant.puuid) : participant.summonerName;
+            li.id = "participant_card";
+            let div = document.createElement('div');
+            let p = document.createElement('p');
+            p.innerHTML = (participant.puuid !== "BOT") ? await Fetch.Username(participant.puuid) : participant.summonerName;
+            div.appendChild(p);
+            p = document.createElement('p');
+            p.innerHTML = participant.championName;
+            div.appendChild(p);
+            let ul = document.createElement('ul');
+            ul.id = "stats";
+            let _li = document.createElement('li');
+            _li.innerHTML = "Kills: " + participant.kills;
+            ul.appendChild(_li);
+            _li = document.createElement('li');
+            _li.innerHTML = "Deaths: " + participant.deaths;
+            ul.appendChild(_li);
+            _li = document.createElement('li');
+            _li.innerHTML = "Assists: " + participant.assists;
+            ul.appendChild(_li);
+            div.appendChild(ul);
+            p = document.createElement('p');
+            p.innerHTML = "Golds: " + participant.goldEarned;
+            div.appendChild(p);
             let team = participant.teamId;
-            if (team === 100) {
+            li.appendChild(div);
+            if(team === 100){
                 blue.appendChild(li);
-            } else {
+            }
+            else{
                 red.appendChild(li);
             }
         });
