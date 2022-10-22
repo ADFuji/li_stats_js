@@ -7,21 +7,29 @@ body{
     line-height: 1.5;
     margin: 0;
     padding: 0;
+    background-image: url("./background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     header{
+        padding: 0 20px;
+        height: $menu_height;
+        background-color: rgb(0, 5, 31);
+        max-height: 60px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 20px;
-        height: $menu_height;
-        background-color: rgb(0, 8, 50);
-        max-height: 60px;
     }
     main{
-        padding: 0 1rem;
         display: flex;
-        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
         #matchs_menu{
             //border: #fff solid 1px;
+            background-color: rgba(0, 0, 0, 0.45);
+            box-shadow: -5px 10px 100px 25px rgba(0, 0, 0, 0.75);
+            -webkit-box-shadow: -5px 10px 100px 25px rgba(0, 0, 0, 0.75);
+            -moz-box-shadow: -5px 10px 100px 25px rgba(0, 0, 0, 0.75);
             ul{
                 list-style: none;
                 padding: 0;
@@ -29,13 +37,17 @@ body{
                 overflow:auto;
                 height: calc(100vh - $menu_height - 2px);
                 width: 200px;
+                #selected {
+                    background-color: #FFF;
+                    color: #000;
+                    font-weight: bold;
+                }
                 li{
                     padding: 0.5rem 1rem;
                     border-bottom: 1px solid #fff;
-                    font-weight: bold;
                 }
                 li:hover{
-                    background-color: #fff;
+                    background-color: rgb(231, 231, 231);
                     color: rgb(0, 8, 50);
                     cursor: pointer;
                 }
@@ -47,40 +59,194 @@ body{
                 background: #fff;
                 border-radius: 10px;
             }
+            scrollbar-color: rgba(255,255,255,45), rgba(0, 0, 0, 0);
+            scrollbar-width: thin;
+            
+              
+              
         }
         #display_match{
             width: 100%;
-            height: calc(100vh - $menu_height - 2px);
-            overflow: auto;
-            padding: 0 1rem;
             #match_card{
-                display: flex;
-                ul{
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                    #participant_card{
-                        padding: 0.5rem 1rem;
-                        font-weight: bold;
-                        background-color: #000;
-                        margin: 1rem;
-                        width: 400px;
-                        div{
-                            #stats{
-                                display: flex;
-                                justify-content: space-evenly;
-                                padding: 0.5rem 1rem;
-                                li{
-                                    padding: 0.5rem 1rem;
-                                    font-weight: bold;
+                width: 100%;
+                overflow-y: scroll;
+                height: calc(100vh - $menu_height - 2px);
+                #match_info_header{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0.5rem 1rem;
+                    margin-bottom: 1em;
+                    border-bottom: 10px solid rgba(0, 0, 0, 0.5);
+                    border-bottom: #fff solid 1px;
+                    -webkit-box-shadow: 1px 12px 34px 4px rgba(0, 0, 0, 0.75);
+                    -moz-box-shadow: 1px 12px 34px 4px rgba(0, 0, 0, 0.75);
+                    #match_info_header_left{
+                        h1{
+                            margin: 0;
+                            padding: 0;
+                        }
+                        p{
+                            margin: 0;
+                            padding: 0;
+                        }
+                    }
+                    #match_info_header_right{
+                        p{
+                            margin: 0;
+                            padding: 0;
+                            font-style: italic;
+                        }
+                    }
+                }
+                #match_info_body{
+                    display: flex;
+                    justify-content: center;
+                    height: calc(100vh - $menu_height - 200px);
+                    #blue_team{
+                        #team_top{
+                            background-color: #0a1a40;
+                        }
+                    }
+                    #red_team{
+                        #team_top{
+                            background-color: #5a0a0a;
+                        }
+                    }
+                    .team{
+                        margin-left: 1.5em;
+                        margin-right: 1.5em;
+                        padding: 0;
+                        height: fit-content;
+                        border: 1px solid #fff;
+                        #team_top{
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 0.5rem 1rem;
+                            border-bottom: 1px solid #fff;
+                            .team_info{
+                                margin: 0;
+                                padding: 0;
+                                h2{
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                                p{
+                                    margin: 0;
+                                    padding: 0;
+                                }
+                            }
+                            .team_bans{
+                                .ban{
+                                    list-style-type: none;
+                                    display: flex;
+                                    li{
+                                        img{
+                                            margin: 0 0.5rem;
+                                            width: 65px;
+                                            height: 65px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .team_players{
+                            margin: 0;
+                            padding: 0;
+                            .player{
+                                list-style: none;
+                                margin: 0;
+                                padding: 0;
+                                .participant_card{
+                                    background-color: #FFF;
+                                    color: #000;
+                                    padding: 0;
+                                    margin: 1em;
+                                    display: flex;
+                                    box-shadow: 10px 10px 52px 0px rgba(0, 0, 0, 0.75);
+                                    -webkit-box-shadow: 10px 10px 52px 0px rgba(0, 0, 0, 0.75);
+                                    -moz-box-shadow: 10px 10px 52px 0px rgba(0, 0, 0, 0.75);
+                                    .champion{
+                                        display: flex;
+                                        flex-direction: column;
+                                        align-items: center;
+                                        padding: 1em;
+                                        img{
+                                            border-radius: 50%;
+                                            width: 100px;
+                                            height: 100px;
+                                            margin: 0;
+                                            padding: 0;
+                                        }
+                                        p{
+                                            margin: 0;
+                                            padding: 0;
+                                        }
+                                    }
+                                    .summoner{
+                                        width: 100%;
+                                        padding: 1em;
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: space-between;                                    
+                                        .top{
+                                            display: flex;
+                                            justify-content: space-between;
+                                            .left{
+                                                h3{
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    font-size: 1.5em;
+                                                }
+                                                p{
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    font-size: 1em;
+                                                }
+                                            }
+                                            p{
+                                                font-style: italic;
+                                                font-size: 1.3em;
+                                            }
+                                        }
+                                        .bottom{
+                                            margin: 0;
+                                            padding: 0;
+                                            .items{
+                                                .item{
+                                                    margin: 0;
+                                                    padding: 0;
+                                                    list-style: none;
+                                                    display: flex;
+                                                    li{
+                                                        img{
+                                                            margin: 0 0.2rem;
+                                                            width: 50px;
+                                                            height: 50px;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                scrollbar-color: rgba(255, 255, 255, 45),
+                rgba(0, 0, 0, 0);
+                scrollbar-width: thin;
+            }
+            #match_card::-webkit-scrollbar {
+                width: 5px;
+            }
+
+            #match_card::-webkit-scrollbar-thumb {
+                background: #fff;
+                border-radius: 10px;
             }
         }
-
-
     }
 }

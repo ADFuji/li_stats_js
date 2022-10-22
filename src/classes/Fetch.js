@@ -3,7 +3,7 @@ import { Summoner } from "./Summoner";
 import { Match } from "./Match";
 //class fetch pour simplifier le changement de token
 export class Fetch {
-    static token = "RGAPI-e9fe83e5-b481-488d-aa9c-8b61c563eb6f"
+    static token = "RGAPI-8b6f2ff7-9335-49c3-9fe4-a51ce1696ca7"
     static setToken(token) { Fetch.header = token; }
     static getToken() { return Fetch.header }
     static async  FetchData(url) {
@@ -37,5 +37,16 @@ export class Fetch {
         match.setInfo(data.info);
         match.setMetadata(data.metadata);
         return match;
+    }
+    static async Champion(id) {
+        let req = await fetch(`http://ddragon.leagueoflegends.com/cdn/12.20.1/data/en_US/champion.json`)
+        let data = await req.json();
+        //find the champion in the json
+        console.log(data)
+        for (let key in data.data) {
+            if (data.data[key].key == id) {
+                return data.data[key];
+            }
+        }
     }
 }

@@ -11,13 +11,11 @@ class App{
             header.appendChild(await this.player.div());
             let main = document.querySelector('main');
             main.appendChild(await this.matchsMenu(this.player.getMatchs()))
-            let first_match = await Fetch.Match(this.player.getMatchs()[0]);
+            let first_match = await Fetch.Match(this.player.getMatchs()[8]);
             let div = document.createElement('div');
             div.id = "display_match";
             div.appendChild(await first_match.div());
             document.querySelector('main').appendChild(div);
-            console.log(this.match);
-            
         })();
         this.init();
     }
@@ -51,6 +49,9 @@ class App{
         for (let i = 0; i < matchs.length; i++) {
             let li = document.createElement('li');
             li.innerHTML = matchs[i] 
+            if(i===0){
+                li.id="selected";
+            }
             li.addEventListener('click', async () => {
                 let display_match = document.querySelector('#display_match');
                 if (display_match) {
@@ -61,7 +62,12 @@ class App{
                 div.id = "display_match";
                 div.appendChild(await match.div());
                 document.querySelector('main').appendChild(div);
-            
+                let selected = document.querySelector('#selected');
+                if (selected) {
+                    selected.removeAttribute('id');
+                }
+                li.id = "selected";
+
 
             })
 
