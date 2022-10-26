@@ -8,14 +8,10 @@ class App{
         (async () => {
             this.player = await Fetch.Player(this.player.getName())
             let header = document.querySelector('header');
-            header.appendChild(await this.player.div());
+            header.appendChild(await this.player.header());
             let main = document.querySelector('main');
-            main.appendChild(await this.matchsMenu(this.player.getMatchs()))
-            let first_match = await Fetch.Match(this.player.getMatchs()[8]);
-            let div = document.createElement('div');
-            div.id = "display_match";
-            div.appendChild(await first_match.div());
-            document.querySelector('main').appendChild(div);
+            main.appendChild(await this.matchsMenu(this.player.getMatchs()));
+            main.appendChild(await this.player.Main());
         })();
         this.init();
     }
@@ -42,6 +38,30 @@ class App{
         footer.appendChild(p);
         document.body.appendChild(footer);
     }
+    async displayMenu(matchid, li){
+        let display_match = document.querySelector('#display_match');
+        let display_main = document.querySelector('#display_main');
+        let back = document.querySelector('#back');
+        if (display_match) {
+            display_match.remove();
+        }
+        if (display_main) {
+            display_main.remove();
+        }
+        if (back) {
+            back.remove();
+        }
+        let match = await Fetch.Match(matchid);
+        let div = document.createElement('div');
+        div.id = "display_match";
+        div.appendChild(await match.div());
+        document.querySelector('main').appendChild(div);
+        let selected = document.querySelector('#selected');
+        if (selected) {
+            selected.removeAttribute('id');
+        }
+        li.id = "selected";
+    }
     async matchsMenu(matchs) {
         let div = document.createElement('div');
         div.id = "matchs_menu";
@@ -49,28 +69,9 @@ class App{
         for (let i = 0; i < matchs.length; i++) {
             let li = document.createElement('li');
             li.innerHTML = matchs[i] 
-            if(i===0){
-                li.id="selected";
-            }
             li.addEventListener('click', async () => {
-                let display_match = document.querySelector('#display_match');
-                if (display_match) {
-                    display_match.remove();
-                }
-                let match = await Fetch.Match(matchs[i]);
-                let div = document.createElement('div');
-                div.id = "display_match";
-                div.appendChild(await match.div());
-                document.querySelector('main').appendChild(div);
-                let selected = document.querySelector('#selected');
-                if (selected) {
-                    selected.removeAttribute('id');
-                }
-                li.id = "selected";
-
-
+                await this.displayMenu(matchs[i], li);
             })
-
             ul.appendChild(li);
         }
         div.appendChild(ul);
