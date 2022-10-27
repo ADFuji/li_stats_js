@@ -3,7 +3,7 @@ import { Summoner } from "./Summoner";
 import { Match } from "./Match";
 //class fetch pour simplifier le changement de token
 export class Fetch {
-    static token = "RGAPI-aaad1747-2b4d-40dd-a732-42bc7657d2a0"
+    static token = "RGAPI-d63681b3-9efa-47c1-ba15-2af60bc81a00"
     static setToken(token) { Fetch.header = token; }
     static getToken() { return Fetch.header }
     static async  FetchData(url) {

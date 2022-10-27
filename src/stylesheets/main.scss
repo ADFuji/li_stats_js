@@ -315,13 +315,12 @@ body{
             //it have 2 div inside: #display_main_header & #display_main_main
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
             margin:0;
             padding:0;
             width: calc(100% - $menu_width);
             height: calc(100vh - $header_height);
-            overflow-y: scroll;
+            overflow-y: auto;
             overflow-x: hidden;
             
             #display_main_header{
@@ -352,43 +351,115 @@ body{
             }
             #display_main_main{
                 display: flex;
-                flex-direction: column;
-                flex-wrap: wrap;
-                justify-content: space-evenly;
-                align-items: center;
-                width: 100%;
-                padding: 0.5em 1em;
-                #CircleProgressDiv{
-                    display: flex;
-                    justify-content: space-evenly;
-                    align-items: center;
-                    width: 100%;
-                    margin: 0;
-                    padding: 0;
-                    .circle-progress{
-                        padding: 0.5em;
+                width: 80%;
+                justify-content: center;
+                #_left{
+                    margin-top: 1em;
+                    #CircleProgressDiv {
+                        
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        flex-wrap: nowrap;
+                
+                        .circle-progress {
+                            padding: 0.5em;
+                            margin: 0.5em;
+                        }
                     }
+                    #qualities_div{
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: nowrap;
+                        justify-content: space-evenly;
+                        .quality{
+                            padding: 0.5em;
+                            margin: 0.5em;
+                            h3{
+                                margin: 0;
+                                padding: 0;
+                                font-size: 1.5em;
+                                border-bottom: 1px solid #fff;
+                            }
+                            p{
+                                margin: 0;
+                                padding: 0;
+                                max-height: 50px;
+                            }
+
+                        }
+                    }
+                }
+                #_right{
+                    margin-top: 1em;
+                    #ChampionPlayedDiv {
+                            display: flex;
+                            margin: 0.5em;
+                            ul {
+                                margin: 0;
+                                padding: 0;
+                                list-style: none;
+                                li {
+                                    margin: 0;
+                                    padding: 0;
+                                    .ChampionPlayedLiDiv {
+                                        display: flex;
+                                        align-items: center;
+                                        margin: 0.5em;
+                                        .left {
+                                            margin: 0;
+                                            padding: 0;
+                                            display: flex;
+                                            flex-direction: column;
+                                            align-items: center;
+                    
+                                            img {
+                                                width: 85px;
+                                                height: 85px;
+                                            }
+                    
+                                            p {
+                                                margin: 0;
+                                                padding: 0;
+                                                font-size: 0.9em;
+                                                font-weight: bold;
+                                            }
+                                            div{
+                                                display: flex;
+                                                align-items: center;
+                                                flex-direction: column;
+                                                .winrate_div {
+                                                    display: flex;
+                                                    flex-direction: row-reverse;
+                                                    font-size: 0.9em;
+                                            
+                                                    p {
+                                                        margin: 0;
+                                                        padding: 0;
+                                                        
+                                                        font-weight: bold;
+                                                        margin-right: 0.3em;
+                                                    }
+                                                }
+                                                p{
+                                                    font-size: 0.8em;
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
                 }
             }
             .module{
                 background-color: #FFF;
-                margin: 0.5em;
                 border-radius: 10px;
                 color: #000;
-                padding: 1em;
-                width: fit-content;
-                height: fit-content;
                 box-shadow: 10px 10px 52px 0px rgba(0, 0, 0, 0.75);
                 -webkit-box-shadow: 10px 10px 52px 0px rgba(0, 0, 0, 0.75);
                 -moz-box-shadow: 10px 10px 52px 0px rgba(0, 0, 0, 0.75);
-            }
-            ul{
-                list-style: none;
-                margin: 0;
-                padding: 0;
-                li{
-                    border-bottom: 1px solid #000;
-                }
             }
         }
     }
