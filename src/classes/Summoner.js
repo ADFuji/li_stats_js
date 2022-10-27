@@ -1,5 +1,6 @@
 //league of legends player
 import { Fetch } from "./Fetch";
+import { CircleProgress } from "./CircleProgress";
 export class Summoner {
     constructor(name) {
         this.name = name;
@@ -98,6 +99,7 @@ export class Summoner {
             {
                 let kda_list = document.createElement('ul');
                 kda_list.id = "kda_list";
+                kda_list.classList.add('module');
                 let matchs_list = /*15 first maths in this.matchs*/ this.matchs.slice(0, 5);
                 console.log(matchs_list)
                 let matchs_data = []
@@ -133,14 +135,73 @@ export class Summoner {
                     }
 
                 })
-                let p_winrate = document.createElement('p');
-                p_winrate.innerHTML = "Winrate : " + winrate + "%";
+                kda_ratio = Math.round((kda_ratio / matchs_data.length) * 100) / 100;
                 let p_kda = document.createElement('p');
-                console.log(kda_ratio / matchs_data.length)
-                p_kda.innerHTML = "KDA : " + kda_ratio / matchs_data.length;
-                main.appendChild(p_winrate);
+                p_kda.classList.add('module');
+                p_kda.innerHTML = "KDA : " + kda_ratio;
+
+                let WinrateProgress = new CircleProgress({
+                    radius: 100,
+                    value: winrate,
+                    maxValue: 100,
+                    width: 15,
+                    color: 'white',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    text: function (value) {
+                        return `Winrate:\n${value}%`;
+                    }
+                })
+                let CircleProgressDiv = document.createElement('div');
+                CircleProgressDiv.id = "CircleProgressDiv";
+                {
+                    let div = [new CircleProgress({
+                        radius: 100,
+                        value: winrate,
+                        maxValue: 100,
+                        width: 15,
+                        color: '#FFF',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        text: function (value) {
+                            return `Winrate:\n${value}%`;
+                        }
+                    }).div(),
+                    new CircleProgress({
+                        radius: 100,
+                        value: winrate,
+                        maxValue: 100,
+                        width: 15,
+                        color: '#FFF',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        text: function (value) {
+                            return `Winrate:\n${value}%`;
+                        }
+                    }).div(),
+                    new CircleProgress({
+                        radius: 100,
+                        value: winrate,
+                        maxValue: 100,
+                        width: 15,
+                        color: '#FFF',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        text: function (value) {
+                            return `Winrate:\n${value}%`;
+                        }
+                    }).div(),]
+                    
+                    CircleProgressDiv.appendChild(WinrateProgress.div());
+                    CircleProgressDiv.appendChild(div[0]);
+                    CircleProgressDiv.appendChild(div[1]);
+
+                }
+                main.appendChild(CircleProgressDiv);
                 main.appendChild(p_kda);
                 main.appendChild(kda_list)
+                let p = document.createElement('p');
+                p.innerHTML = "Matchs :azdddddddddddddddddddddddddddddddddddddddddddddddd " + this.matchs.length;
+                main.appendChild(p);
+                let p1 = document.createElement('p');
+                p1.innerHTML = "Matchs :azdddddddddddddddddddddddddddddddddddddddddddddddd " + this.matchs.length;
+                main.appendChild(p1);
             }
             div.appendChild(header);
             div.appendChild(main);
