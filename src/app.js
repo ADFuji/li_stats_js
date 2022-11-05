@@ -2,6 +2,7 @@ import '../src/stylesheets/main.scss'
 import { Fetch } from './classes/Fetch.js'
 import { Summoner } from './classes/Summoner.js';
 import { Match } from './classes/Match.js';
+import { Searchbar } from './classes/Searchbar.js';
 class App{
     constructor() {
         this.player = new Summoner("ADFujiGang");
@@ -24,7 +25,9 @@ class App{
         let header = document.createElement('header');
         let h1 = document.createElement('h1');
         h1.innerHTML = 'Li Stats!';
+        let searchbar = new Searchbar();
         header.appendChild(h1);
+        header.appendChild(searchbar.getform());
         document.body.appendChild(header);
     }
     async main(){

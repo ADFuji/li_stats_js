@@ -453,11 +453,18 @@ export class Summoner {
             let main = document.createElement('div');
             main.id = "display_main_main";
             {
-                let matchs_list = /*15 first maths in this.matchs*/ this.matchs.slice(0, 5);
+                let matchs = ((matchs, n) => {
+                    let res = []
+                    for (let i = 0; i < n; i++) {
+                        res.push(matchs[i]);
+                    }
+                    return res
+                }) (this.matchs, 5)
+                let matchs_list = matchs.splice(0, 5);
                 console.log(matchs_list)
                 let matchs_data = []
                 for (let i = 0; i < matchs_list.length; i++) {
-                    matchs_data.push(await Fetch.Match(matchs_list[i]));
+                    matchs_data.push(await Fetch.Match(matchs_list[i], false));
                 }
                 let CircleProgressDiv = document.createElement('div');
                 CircleProgressDiv.id = "CircleProgressDiv";
@@ -476,7 +483,7 @@ export class Summoner {
                     let KdaProgress = new CircleProgress({
                         radius: 100,
                         value: this.getKdaAverage(matchs_data),
-                        maxValue: 10,
+                        maxValue: 50,
                         width: 15,
                         color: 'lightpink',
                         backgroundColor: 'rgba(0, 0, 0, 0.5)',
