@@ -642,9 +642,28 @@ export class Match {
                                                         let summoner = await Fetch.Player(participant.summonerName);
                                                         let summoner_display = await summoner.Main()
                                                         summoner_display.id = "display_main";
-                                                        let back = document.createElement('p');
+                                                        let back = document.createElement('canvas');
                                                         back.id = "back";
-                                                        back.innerHTML = "<- Back";
+                                                        back.width = 55;
+                                                        back.height = 55;
+                                                        let ctx = back.getContext('2d');
+                                                        ctx.strokeStyle = "white";
+                                                        ctx.fillStyle = "white";
+                                                        ctx.lineWidth = 5;
+                                                        //draw a circle with a radius of 45 in the center of the canvas with a cross in the middle
+                                                        ctx.beginPath();
+                                                        ctx.arc(27.5, 27.5, 22.5, 0, 2 * Math.PI);
+                                                        ctx.stroke();
+                                                        ctx.beginPath();
+                                                        ctx.moveTo(15, 15);
+                                                        ctx.lineTo(40, 40);
+                                                        ctx.stroke();
+                                                        ctx.beginPath();
+                                                        ctx.moveTo(40, 15);
+                                                        ctx.lineTo(15, 40);
+                                                        ctx.stroke();
+                                                        
+
                                                         back.addEventListener('click', () => {
                                                             summoner_display.remove();
                                                             display_match.style.display = "block";

@@ -11,7 +11,7 @@ export class Fetch {
     static nRequests = 0
     static lastRequest = 0;
     static waiting = 1500;
-    static token = "RGAPI-f759e788-9392-449c-b5d4-bfd1b56d8e2a"
+    static token = "RGAPI-1cc4bcd8-ef0a-4fc9-b608-0fbc207881e8"
     static setToken(token) { Fetch.header = token; }
     static getToken() { return Fetch.header }
 
@@ -19,26 +19,15 @@ export class Fetch {
         let req = 0
         let data = 0
         try {
-            //if the time between the last request and the current request is less than 1.1s, wait for the time to be over
-            console.log(Date.now() - Fetch.lastRequest)
             Fetch.waiting=375
-            console.log("waiting time", Fetch.waiting)
-            //si le temps entre la derniere requete et la requete actuelle est inferieur a 1.1s, attendre que le temps soit depasse
             if (Date.now() - Fetch.lastRequest < Fetch.waiting) {
-                console.log("waiting")
                 await new Promise(resolve => setTimeout(resolve, Fetch.waiting - (Date.now() - Fetch.lastRequest)));
-                console.log("done waiting")
             }
-            //if the number of requests is greater than 20, wait for the time to be over
-            //si le nombre de requetes est superieur a 20, attendre que le temps soit depasse
             if (Fetch.totalRequests == 3) {
-                console.log("waiting for rate limit", Fetch.totalRequests)
                 await new Promise(resolve => setTimeout(resolve, 1000));
                 Fetch.totalRequests = 0;
-                console.log("done waiting")
             }
             Fetch.nRequests++;
-            //fetch url and return json if ok else throw error
             req = await fetch(url);
             if (req.status == 429) {
                 throw new Error("rate limit");
@@ -55,9 +44,8 @@ export class Fetch {
             }
  
         } catch (error) {
-            
             console.log(error);
-            if (Fetch.nRequests > 5) {
+            if (error.message == "rate limit") {
                 Fetch.nRequests--;
                 setTimeout(async () => {
                     data = await Fetch.FetchData(url);
@@ -74,7 +62,15 @@ export class Fetch {
         LoadingDiv.start();
         let summoner = new Summoner(name);
         try {
-            let data = await Fetch.FetchData(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${Fetch.token}`);
+            let data = null
+            try {
+                data = await Fetch.FetchData(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${name}?api_key=${Fetch.token}`);
+            }
+            catch (error) {
+                if (error.message == "not found") {
+                    throw new Error("not found");
+                }
+            }
             summoner.setPuuid(data.puuid);
             summoner.setAccountId(data.accountId);
             summoner.setSummonerLevel(data.summonerLevel);

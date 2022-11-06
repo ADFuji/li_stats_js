@@ -33,25 +33,10 @@ export class Searchbar{
             let name = input.value;
             try {
                 let summoner = await Fetch.Player(name);
-                try {
-                    let dmain = document.querySelector('#display_main');
-                    dmain.remove();
-                    let main = document.querySelector('main');
-                    main.appendChild(await summoner.Main());
-
-
-                }
-                catch {
-                    
-                    let popup = new Popup('error', 'An error occured while displaying the summoner');
-                    document.body.appendChild(popup.getPopup());
-                    let display_match = document.querySelector('#display_match');
-                    if (display_match) {
-                        display_match.remove();
-                    }
-                    let main = document.querySelector('main');
-                    main.appendChild(await summoner.Main());
-                }
+                let dmain = document.querySelector('#display_main');
+                dmain.remove();
+                let main = document.querySelector('main');
+                main.appendChild(await summoner.Main());
             }
             catch (e) {
                 console.log("searchbar", e.message);

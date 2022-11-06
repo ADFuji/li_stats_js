@@ -36,14 +36,6 @@ export class Summoner {
         })
         return ret
     }
-    callback(data) {
-        console.log("callback", data);
-        this.setAccountId(data.accountId)
-        this.setId(data.id)
-        this.setPuuid(data.puuid)
-        this.setSummonerLevel(data.summonerLevel)
-        console.log(this)
-    }
     async header() {
         let div = document.createElement('div');
         div.id = "player_card";
@@ -434,20 +426,25 @@ export class Summoner {
             let header = document.createElement('div');
             header.id = "display_main_header";
             {
-                let img = document.createElement('img');
-                img.src = "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + this.profileIconId + ".png";
-                let d = document.createElement('div');
+                let left = document.createElement('div');
+                left.id = "display_main_header_left";
                 {
-                    let h2 = document.createElement('h2');
-                    h2.innerHTML = this.name;
-                    let p = document.createElement('p');
-                    p.innerHTML = "Level : " + this.summonerLevel;
-                    d.appendChild(h2);
-                    d.appendChild(p);
+                    let img = document.createElement('img');
+                    img.src = "http://ddragon.leagueoflegends.com/cdn/12.20.1/img/profileicon/" + this.profileIconId + ".png";
+                    let d = document.createElement('div');
+                    {
+                        let h2 = document.createElement('h2');
+                        h2.innerHTML = this.name;
+                        let p = document.createElement('p');
+                        p.innerHTML = "Level : " + this.summonerLevel;
+                        d.appendChild(h2);
+                        d.appendChild(p);
+                    }
+                    left.appendChild(img);
+                    left.appendChild(d);
                 }
                 
-                header.appendChild(img);
-                header.appendChild(d);
+                header.appendChild(left)
             }
             let main = document.createElement('div');
             main.id = "display_main_main";
