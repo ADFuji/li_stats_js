@@ -5,16 +5,39 @@ import { Match } from './classes/Match.js';
 import { Searchbar } from './classes/Searchbar.js';
 class App{
     constructor() {
-        this.player = new Summoner("ADFujiGang");
+        this.player = null;
         (async () => {
-            this.player = await Fetch.Player(this.player.getName())
+            this.defineMySummoner()
+        })();
+        
+    }
+    async defineMySummoner() {
+        let div = document.createElement('div');
+        div.id = "define_my_summoner";
+        let p = document.createElement('p');
+        p.innerHTML = "Define your summoner name";
+        let input = document.createElement('input');
+        input.type = "text";
+        input.id = "my_summoner";
+        let button = document.createElement('button');
+        button.innerHTML = "Define";
+        button.addEventListener('click', async () => {
+            div.remove();
+            await this.init();
+            this.player = await Fetch.Player(input.value);
             let header = document.querySelector('header');
             header.appendChild(await this.player.header());
             let main = document.querySelector('main');
             main.appendChild(await this.matchsMenu(this.player.getMatchs()));
             main.appendChild(await this.player.Main());
-        })();
-        this.init();
+            div.remove();
+            
+        })
+        div.appendChild(p);
+        div.appendChild(input);
+        div.appendChild(button);
+        document.querySelector('body').appendChild(div);
+        
     }
     async init(){
         this.header();
@@ -26,6 +49,7 @@ class App{
         let h1 = document.createElement('h1');
         h1.innerHTML = 'Li Stats!';
         let searchbar = new Searchbar();
+
         header.appendChild(h1);
         header.appendChild(searchbar.getform());
         document.body.appendChild(header);

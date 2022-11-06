@@ -1,5 +1,7 @@
 import { Fetch } from "./Fetch";
 import { Summoner } from "./Summoner";
+import { Popup } from "./Popup";
+import { LoadingDiv } from "./LoadingDiv";
 export class Searchbar{
     constructor() {
         this.form = document.createElement('form');
@@ -27,12 +29,10 @@ export class Searchbar{
         let input = document.getElementById('search-input');
         if(input.value != '') {
             e.preventDefault();
+            LoadingDiv.start();
             let name = input.value;
-            let summoner = await Fetch.Player(name);
             try {
-                if(summoner.accountId == undefined) {
-                    throw 'Summoner not found';
-                }
+                let summoner = await Fetch.Player(name);
                 try {
                     let dmain = document.querySelector('#display_main');
                     dmain.remove();
@@ -42,6 +42,9 @@ export class Searchbar{
 
                 }
                 catch {
+                    
+                    let popup = new Popup('error', 'An error occured while displaying the summoner');
+                    document.body.appendChild(popup.getPopup());
                     let display_match = document.querySelector('#display_match');
                     if (display_match) {
                         display_match.remove();
@@ -51,9 +54,13 @@ export class Searchbar{
                 }
             }
             catch (e) {
-                console.log(e);
+                console.log("searchbar", e.message);
+                let popup = new Popup('Error', "Failed to fetch player data, maybe the player doesn't exist");
+                document.body.appendChild(popup.getPopup());
+                console.log(e.message);
             }
             input.value = '';
+            LoadingDiv.stop();
         }
     }
     getform() {

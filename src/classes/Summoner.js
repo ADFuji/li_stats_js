@@ -116,11 +116,10 @@ export class Summoner {
             let participant = match.info.participants.filter((participant) => {
                 return participant.puuid == this.puuid;
             })
-            kda.push((participant[0].kills / participant[0].deaths) + (participant[0].assists / participant[0].deaths));
+            kda.push((participant[0].kills / (participant[0].deaths!==0)?participant[0].deaths:1) + (participant[0].assists / (participant[0].deaths!==0)?participant[0].deaths:1));
         })
         let kdaAverage = kda.reduce((a, b) => a + b, 0) / kda.length;
-        kdaAverage = kdaAverage.toFixed(2);
-        return kdaAverage;
+        return kdaAverage.toFixed(2);
     }
     //écris une fonction qui prend en paramètre un tableau de matchs et qui renvoie le winrate du joueur
     getWinrate(matchs) {
@@ -138,7 +137,7 @@ export class Summoner {
             }
         })
         let winrate = win / (win + lose) * 100;
-        return winrate;
+        return winrate.toFixed(2);
     }
     //écris une fonction qui prend en paramètre un tableau de matchs et qui renvoie le score de vision en pourcentage du joueur
     getVisionScore(matchs) {
@@ -150,7 +149,7 @@ export class Summoner {
             visionScore.push(participant[0].visionScore+participant[0].visionWardsBoughtInGame+participant[0].wardsPlaced+participant[0].wardsKilled);
         })
         let visionScoreAverage = visionScore.reduce((a, b) => a + b, 0) / visionScore.length;
-        return visionScoreAverage;
+        return visionScoreAverage.toFixed(2);
     }
     //écris une fonction qui prend en paramètre un tableau de matchs et qui renvoie une balise p avec "Tu es raciste" si le joueur a joué teemo
     getRacist(matchs) {
@@ -453,14 +452,14 @@ export class Summoner {
             let main = document.createElement('div');
             main.id = "display_main_main";
             {
-                let matchs = ((matchs, n) => {
+                let matchs_list = ((matchs, n) => {
                     let res = []
                     for (let i = 0; i < n; i++) {
                         res.push(matchs[i]);
                     }
                     return res
-                }) (this.matchs, 5)
-                let matchs_list = matchs.splice(0, 5);
+                })(this.matchs, 10);
+                Fetch.calcWaitTime(matchs_list);
                 console.log(matchs_list)
                 let matchs_data = []
                 for (let i = 0; i < matchs_list.length; i++) {
@@ -540,7 +539,7 @@ export class Summoner {
                                             winrate_div.appendChild(win);
                                         }
                                         let kdaratio = document.createElement('p');
-                                        kdaratio.innerHTML = (champion.kills / champion.deaths + champion.assists / champion.deaths).toFixed(2) + " KDA";
+                                        kdaratio.innerHTML = (champion.kills / (champion.deaths!==0)?champion.deaths:1 + champion.assists / (champion.deaths!==0)?champion.deaths:1).toFixed(2) + " KDA";
                                         lol.appendChild(winrate_div);
                                         lol.appendChild(kdaratio);
                                     }
