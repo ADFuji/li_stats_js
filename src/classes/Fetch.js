@@ -11,7 +11,7 @@ export class Fetch {
     static nRequests = 0
     static lastRequest = 0;
     static waiting = 1500;
-    static token = "RGAPI-1cc4bcd8-ef0a-4fc9-b608-0fbc207881e8"
+    static token = "TOKEN"
     static setToken(token) { Fetch.header = token; }
     static getToken() { return Fetch.header }
 
